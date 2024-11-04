@@ -1,7 +1,8 @@
 # *
 User-agent: *
-Allow: /
-
+#Allow: /
+Disallow : https://renewed-orca-43.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js
+Disallow : /sign-up
 # Host
 Host: https://opremime.si
 

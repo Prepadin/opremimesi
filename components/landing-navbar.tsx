@@ -38,7 +38,7 @@ export const LandingNavbar = () => {
 
       <Button className="rounded-full gap-x-1" asChild onClick={showLoading}>
         <Link href={isSignedIn ? '/dashboard' : '/sign-up'}>
-          {isSignedIn ? 'Pojdi na začetek' : 'Začni '}
+          {isSignedIn ? 'Pojdi na začetek' : 'Začnite '}
           {isLoading ? <LoadingSpinner /> : <ArrowRight className="w-4 h-4" />}
         </Link>
       </Button>

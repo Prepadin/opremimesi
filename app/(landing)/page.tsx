@@ -13,8 +13,8 @@ const LandingPage = () => (
     <LandingAfter />
     <LandingPricing />
     <LandingContent />
-    <LandingFooter />
-    {/* <LandingFooters /> */}
+    {/* <LandingFooter /> */}
+    <LandingFooters />
   </div>
 )
 

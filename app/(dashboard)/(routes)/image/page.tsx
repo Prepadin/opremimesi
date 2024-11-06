@@ -187,9 +187,9 @@ return (
               onClick={() => document.getElementById('fileInput')?.click()}
             >
               <Upload className="w-12 h-12 text-gray-400 mb-2" />
-              <p className="text-sm text-gray-500">Vstavite sliko</p>
+              <p className="text-sm text-gray-500">Vstavite sliko sobe</p>
               <p className="text-sm text-gray-400 mt-2">- ali -</p>
-              <p className="text-sm text-blue-500">Pritisnite in pripnite sliko</p>
+              <p className="text-sm text-blue-500">Pritisnite in pripnite sliko sobe</p>
               <input
                 id="fileInput"
                 type="file"

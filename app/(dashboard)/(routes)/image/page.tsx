@@ -6,10 +6,18 @@ import axios from "axios";
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Upload, Image as ImageIcon, Sliders, X } from 'lucide-react'
+import Image from "next/image"
+// import { ScrollArea } from "@/components/ui/scroll-area"
+
+interface RoomDescription {
+  image: string
+  description: string
+}
+
 
 export default function ImagePage() {
   const [file, setFile] = useState<File | null>(null)
-  const [prompt, setPrompt] = useState("");
+  const [prompt, setPrompt] = useState<string>("");
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -17,7 +25,38 @@ export default function ImagePage() {
   
   const [preview, setPreview] = useState<string | null>(null)
 
-  
+  const rooms: RoomDescription[] = [
+    {
+      image: "/bed.jpg?height=50&width=50",
+      description: "Elegantno opremljena spalnica v slogu Art Deco z veliko zakonsko posteljo z geometrijsko posteljnino, razkošnim žametnim foteljem in zrcalno nočno omarico, ki odraža razkošje sobe. Umetniška dela, navdihnjena z Art Deco, dodajo pridih glamurja"
+    },
+    {
+      image: "/bedroom_2.jpg?height=50&width=100",
+      description: "Spalnica, ki izžareva francoski podeželski čar z mehko oblazinjeno posteljo, stenami, okrašene s cvetličnimi tapetami, in vintage leseno garderobo. Kristalni lestenec meče topel in vabljiv sijaj nad prostorom"
+    },
+    {
+      image: "/din.jpg?height=200&width=300",
+      description: "Udobna jedilnica, ki zajema bistvo rustikalnega šarma s trdno leseno kmečko mizo v svojem jedru, obdano z eklektično mešanico neusklajenih stolov. Starinska omara služi kot izjava, vzdušje pa toplo osvetljuje vrsta čudnih Edisonovih žarnic, ki visijo s stropa"
+    },
+    {
+      image: "/dinning.jpg?height=200&width=300",
+      description: "Jedilnica, ki pooseblja sodobno eleganco, zasidrana z elegantno, minimalistično jedilno mizo v kombinaciji z elegantnimi sodobnimi stoli. Umetniške svetilke ustvarjajo osrednjo točko zgoraj, medtem ko okoliški minimalistični dekor zagotavlja, da se prostor počuti odprt, zračen in popolnoma sodoben"
+    },
+    {
+      image: "/imga1.jpg?height=200&width=300",
+      description: "Glamurozna glavna spalnica v slogu Hollywood Regency, ki se ponaša s plišastim vzglavjem, zrcalnim pohištvom, ki odraža eleganco, razkošnimi tkaninami v bogatih teksturah in razkošnimi zlatimi poudarki za pridih razkošja"
+    },
+    {
+      image: "/living2.jpg?height=200&width=300",
+      description: "Živahna dnevna soba s tropsko temo, skupaj z udobnim pohištvom iz ratana, velikimi listnatimi rastlinami, ki prinašajo zunanjost, svetlimi blazinami, ki dodajajo barve, in bambusovimi žaluzijami za nadzor naravne svetlobe"
+    },
+    {
+      image: "/livingg.jpg?height=200&width=300",
+      description: "Elegantna dnevna soba, ki zajema sodobno estetiko sredi stoletja, v središču ima starinsko mizico iz tikovine, ki jo dopolnjuje klasična sončna ura na steni in udobna preproga pod nogami, ki ustvarja toplo in vabljivo vzdušje"
+    }
+  ]
+
+
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -127,9 +166,24 @@ export default function ImagePage() {
     }
   };
 
-  
+  // Add this new function to handle example image selection
+  const handleExampleImageSelect = async (imageUrl: string, description: string) => {
+    try {
+      // Handle image selection
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const file = new File([blob], 'example-room.jpg', { type: 'image/jpeg' });
+      setSelectedImage(file);
+      
+      // Set the prompt text
+      setPrompt(description);
+    } catch (error) {
+      console.error('Error loading example image:', error);
+    }
+  };
 
 
+ 
 
 return (
      <>
@@ -147,16 +201,16 @@ return (
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
         />
       </div>
-      <div>
+      {/* <div>
         <p>Primer:</p>
     <p className="block text-sm font-medium text-gray-700 ">Elegantno opremljena spalnica v slogu Art Deco z veliko zakonsko posteljo in zrcalno nočno omarico, ki odraža razkošje sobe. Umetniška dela, navdihnjena z Art Deco, dodajo pridih glamurja. </p>
         
-</div>
+   </div> */}
      
  
     </form>
     </div>
-    <div className="h-full w-full max-w-6xl mx-auto p-4 pb-64">
+    <div className="h-full w-full max-w-6xl mx-auto p-4 pb-20">
   <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-4">
     
     {/* Card 1: Upload Image (Inside Form) */}
@@ -239,7 +293,36 @@ return (
     </Card>
   </div>
 </div>
+<div className="container mx-auto p-4">
+      <h1 className="text-xl  mb-6">Splošni primeri:</h1>
+      {/* <ScrollArea className="h-[800px] rounded-lg border p-4"> */}
+        {rooms.map((room, index) => (
+          <Card key={index} className="mb-4">
+            <CardContent className="p-4">
+              <div className="flex flex-col md:flex-row gap-4">
+                <Image
+                  src={room.image}
+                  alt={`Room design ${index + 1}`}
+                  width={300}
+                  height={200}
+                  className="rounded-lg object-cover w-full md:w-1/6"
+                />
+                <div className="w-full md:w-2/3">
+                  <p className="text-sm text-muted-foreground mb-4">{room.description}</p>
+                  <Button 
+                    onClick={() => handleExampleImageSelect(room.image, room.description)}
+                    className="bg-blue-600 text-white hover:bg-blue-700"
+                  >
+                    Preizkusi
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      {/* </ScrollArea> */}
+    </div>
+   
 </>
-);
+  );
 }
-

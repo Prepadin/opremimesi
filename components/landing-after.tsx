@@ -67,19 +67,19 @@ export const LandingAfter = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   const images = [
-    { src: "/room5.jpg?height=300&width=200", alt: "Image 5", text: "Image 5" },
-    {  src: "/living2.jpg?height=300&width=200", alt: "Image 4", text: "Image 4" },
-    { src: "/dinning.jpg?height=300&width=200", alt: "Image 3", text: "Image 3" },
     { src: "/room4.jpg?height=300&width=200", alt: "Image 4", text: "Image 4" },
+    { src: "/living2.jpg?height=300&width=200", alt: "Image 4", text: "Image 4" },
+    { src: "/dinning.jpg?height=300&width=200", alt: "Image 3", text: "Image 3" },
     { src: "/kitchen.jpg?height=300&width=200", alt: "Image 5", text: "Image 5" },
+    { src: "/room5.jpg?height=300&width=200", alt: "Image 5", text: "Image 5" },
   ]
 
   const images1 = [
-    { src: "/room5lux.png?height=300&width=200", alt: "Image 5", text: "Image 5" },
-    {  src: "/livinglux3.png?height=300&width=200", alt: "Image 4", text: "Image 4" },
-    { src: "/livinglux.png?height=300&width=200", alt: "Image 3", text: "Image 3" },
     { src: "/room4lux.png?height=300&width=200", alt: "Image 4", text: "Image 4" },
+    { src: "/livinglux3.png?height=300&width=200", alt: "Image 4", text: "Image 4" },
+    { src: "/livinglux.png?height=300&width=200", alt: "Image 3", text: "Image 3" },
     { src: "/kitchenlux.png?height=300&width=200", alt: "Image 5", text: "Image 5" },
+    { src: "/room5lux.png?height=300&width=200", alt: "Image 5", text: "Image 5" },
   ]
 
 

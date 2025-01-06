@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Upload, Image as ImageIcon, Sliders, X } from 'lucide-react'
 import Image from "next/image"
 // import { ScrollArea } from "@/components/ui/scroll-area"
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"; // Replace with your actual library
 
 interface RoomDescription {
   image: string
@@ -145,7 +146,7 @@ export default function ImagePage() {
       // Step 3: Generate the image with the translated prompt
       setLoading(true);
       const imageResponse = await axios.post(
-        `https://d2bc-46-122-68-255.ngrok-free.app/generate_design/?prompt=${translatedPrompt}`,
+        `https://f7dc-46-122-68-255.ngrok-free.app/generate_design/?prompt=${translatedPrompt}`,
         formData,
         {
           headers: {
@@ -182,16 +183,101 @@ export default function ImagePage() {
     }
   };
 
-
+  // const handleSelectChange = (value) => {
+  //   setPrompt(value); // Update the input field with the selected value
+  // };
  
+  const handleRoomTypeChange = (value: string) => {
+    setPrompt((prev) => `${value}${prev ? `, ${prev}` : ""}`);
+  };
+
+  const handleDesignStyleChange = (value: string) => {
+    setPrompt((prev) => `${prev}${prev ? `, ${value}` : value}`);
+  };
 
 return (
      <>
+     
   <div className="p-5">
     <h1 className="text-3xl font-bold mb-6 ">Generator Sobne Opreme</h1>
+    {/* Room Type Selector */}
+    <div className="space-y-2">
+          <label className="block text-base font-medium text-gray-700 flex items-center gap-1">Vrsta Sobe</label>
+          {/* <Select defaultValue="" onValueChange={handleRoomTypeChange}>
+            <SelectTrigger className="w-full bg-[#0D0B14] border-0 text-white">
+              <SelectValue placeholder="Select room type" />  */}
+               <Select
+    defaultValue=""
+    onValueChange={(value) => setPrompt((prev) => `${value}, ${prev.split(',').slice(1).join(',')}`.trim())}
+  >
+     <SelectTrigger className="w-full bg-[#0D0B14] border-0 text-white">
+              <SelectValue placeholder="Izberi vrsto sobe" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Dnevna Soba">Dnevna Soba</SelectItem>
+              <SelectItem value="Spalnica">Spalnica</SelectItem>
+              <SelectItem value="Kuhinja">Kuhinja</SelectItem>
+              <SelectItem value="Jedilnica">Jedilnica</SelectItem>
+              <SelectItem value="Otroška soba">Otroška soba</SelectItem>
+              <SelectItem value="Pisarna">Pisarna</SelectItem>
+              </SelectContent>
+          </Select>
+        </div>
+        <div className="space-y-2 mt-4">
+          <label className="block text-base font-medium text-gray-700 flex items-center gap-1">Dizajn Sobe</label>
+          {/* <Select defaultValue="" onValueChange={handleDesignStyleChange}> */}
+          <Select
+    defaultValue=""
+    onValueChange={(value) =>
+      setPrompt((prev) => {
+        const [roomType] = prev.split(','); // Extract the room type
+        return `${roomType}, ${value}`.trim(); // Combine room type with new design style
+      })
+    }
+  >
+            <SelectTrigger className="w-full bg-[#0D0B14] border-0 text-white">
+              <SelectValue placeholder="Izberi vrsto sloga" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="sodoben slog, elegantne linije, nevtralni toni, geometrijske oblike, minimalna dekoracija doma, enobarvna, bela, bež, siva, črna, les, steklo, kovinski poudarki">
+                Sodoben
+              </SelectItem>
+              <SelectItem value="Svetla lesena tla, prijeten tekstil, zamolkli pastelni toni, minimalistično pohištvo, funkcionalen dekor, naravna svetloba, zeleni poudarki, mehke bele stene, volnene preproge in preprosto leseno pohištvo.">
+              Skandinavska spokojnost
+              </SelectItem>
+              <SelectItem value="Izpostavljene opečne stene, betonska tla, jeklene napeljave, odprte police, nevtralne sive barve, topli lesni odtenki, osvetlitev, ki je navdihnila vintage, usnjeno pohištvo, črni poudarki in velika okna.">
+              Industrijski šik
+              </SelectItem>
+              <SelectItem value="Pohištvo z retro navdihom, stožčaste lesene noge, drzni geometrijski vzorci, živahni barvni poudarki, topli lesni odtenki, velika okna, minimalističen dekor, mehki tekstil in elegantne luči.">
+              Moderno sredi stoletja
+              </SelectItem>
+              <SelectItem value="Eklektično pohištvo, večplastni tekstil, makrame poudarki, zemeljski toni, topla razsvetljava, tkane preproge, naravni materiali, nizki sedeži, vzorčaste blazine in lončnice.">
+              Bohemiska energija
+              </SelectItem>
+              <SelectItem value="Sijajni zaključki, izrazita razsvetljava, elegantno pohištvo, monokromatska paleta, vrhunski materiali, plišasti tekstil, subtilne kovine, čiste linije in abstraktna umetnina.">
+              Sodobni Luxe
+              </SelectItem>
+              <SelectItem value="Nevtralna barvna paleta, pohištvo nizkega profila, naravni les, mehke teksture, čiste linije, topla osvetlitev, funkcionalen dekor, tatami, preprosta keramika in občutek miru.">
+              Japonski minimalizem
+              </SelectItem>
+              <SelectItem value="Pohištvo iz umazanega lesa, ladjaste stene, nevtralni toni, mehki tekstil, udobne preproge, starinski dekor, odprte police, naravna svetloba, vrata hleva in osvetlitev v starinskem slogu.">
+              Rustikalna kmečka hiša
+              </SelectItem>
+              <SelectItem value="Odprt tloris, visoki stropi, velika okna, surovine, kot sta opeka in beton, moderno pohištvo, nevtralni toni, črni kovinski poudarki, minimalistični dekor in drzni umetniški deli.">
+              Urbano podstrešje
+              </SelectItem>
+              <SelectItem value="Bujno zelenje, naravni les, pohištvo iz ratana, živahni vzorci, mehke bele stene, umetnine s tropsko tematiko, topla razsvetljava, zračne zavese in poudarki iz bambusa.">
+              Tropski umik
+              </SelectItem>
+              <SelectItem value="Mehke modre, peščeno bež barve, pobeljen les, naravne teksture, lahke tkanine, navtični dekor, pletene košare, zračne zavese, poudarki iz naplavljenega lesa in obilo naravne svetlobe.">
+              Obalno zatišje
+              </SelectItem>
+              </SelectContent>
+          </Select>
+        </div>
     <form onSubmit={handleSubmit} className="mb-6 grid  ">
-      <div className="mb-4 ">
-        <label className="block text-base font-medium text-gray-700 ">Besedilo za oblikovanje:</label>
+      <div className="space-y-2 mt-4">
+        <label className="block text-base font-medium text-gray-700 flex items-center gap-1 ">Besedilo za oblikovanje:</label>
        
         <input
           type="text"

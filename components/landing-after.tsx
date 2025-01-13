@@ -60,7 +60,7 @@ export const LandingAfter = () => {
         <div className="md:w-1/2 mb-8 md:mb-0">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
             Vaš osebni <span className="text-blue-500">AI</span><br />
-            dizajner interijera
+            notranji oblikovalec
           </h1>
         </div>
         <div className="md:w-1/2 relative">

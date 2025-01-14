@@ -1,5 +1,6 @@
 'use client'
-
+import Lottie from "lottie-react";
+import animationData from "@/public/assets/house1.json"
 import { useRouter } from 'next/navigation'
 import { ArrowRight } from 'lucide-react'
 
@@ -40,6 +41,9 @@ const DashboardPage = () => {
             <ArrowRight className="w-5 h-5" />
           </Card>
         ))}
+        <div className="flex justify-center items-center">
+      <Lottie style={{ width: '50%', height: '50%' }} animationData={animationData} />
+    </div>
       </div>
     </div>
   )

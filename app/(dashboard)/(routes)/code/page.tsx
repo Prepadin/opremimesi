@@ -1,4 +1,4 @@
-
+"use client"
 
 import Lottie from "lottie-react";
 import animationData from "@/public/assets/mail.json"
@@ -21,13 +21,13 @@ export default function ContactPage() {
               <p className="text-gray-600">info@opremime.si</p>
             </div>
           </div>
-          <div className="flex items-center space-x-4">
+          {/* <div className="flex items-center space-x-4">
             <Phone className="h-6 w-6 text-gray-400" />
             <div>
               <h3 className="text-lg font-semibold">Telefon</h3>
               <p className="text-gray-600">+386-069-403-021</p>
             </div>
-          </div>
+          </div> */}
           {/* <div className="flex items-center space-x-4">
             <MapPin className="h-6 w-6 text-gray-400" />
             <div>

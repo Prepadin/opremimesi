@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
 export const siteConfig: Metadata = {
-  title: 'OPREMI ME: Umetno Inteligenčni Sobni Oblikovalec',
-  description: 'Oblikujte svoj sanjski dom. Spremenite svoje ideje v profesionalne notranje modele z našo AI programsko opremo, ki je preprosta za uporabo.',
+  title: 'OPREMI ME: Preoblikujte svojo sobo z Umetno Inteligenco',
+  description: 'Naložite slike svoje sobe ter izberite želeni način in slog. Umetna inteligenca bo ustvarila prilagojene oblikovalske ideje na podlagi vaših vnosov.',
   keywords: [
     'notranji dezajn',
     'oblikovanje prostora',

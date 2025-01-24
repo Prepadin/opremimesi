@@ -1,4 +1,4 @@
-import { BeforeAfterSlider } from "@/components/before-after-slider"
+
 import { Button } from "@/components/ui/button"
 import Image from "next/image";
 

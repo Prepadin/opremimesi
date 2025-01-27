@@ -27,10 +27,10 @@ export default function ImagePage() {
   const [preview, setPreview] = useState<string | null>(null)
 
   const rooms: RoomDescription[] = [
-    {
-      image: "/bed.jpg?height=50&width=50",
-      description: "Elegantno opremljena spalnica v slogu Art Deco z veliko zakonsko posteljo z geometrijsko posteljnino, razkošnim žametnim foteljem in zrcalno nočno omarico, ki odraža razkošje sobe. Umetniška dela, navdihnjena z Art Deco, dodajo pridih glamurja"
-    },
+    // {
+    //   image: "/bed.jpg?height=50&width=50",
+    //   description: "Elegantno opremljena spalnica v slogu Art Deco z veliko zakonsko posteljo z geometrijsko posteljnino, razkošnim žametnim foteljem in zrcalno nočno omarico, ki odraža razkošje sobe. Umetniška dela, navdihnjena z Art Deco, dodajo pridih glamurja"
+    // },
     {
       image: "/bedroom_2.jpg?height=50&width=100",
       description: "Spalnica, ki izžareva francoski podeželski čar z mehko oblazinjeno posteljo, stenami, okrašene s cvetličnimi tapetami, in vintage leseno garderobo. Kristalni lestenec meče topel in vabljiv sijaj nad prostorom"

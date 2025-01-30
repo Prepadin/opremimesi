@@ -32,7 +32,7 @@ export default function ImagePage() {
           updateLoadingStatus(false); // Use the new name here
           return 100;
         }
-        return prevProgress + 100 / 30; // Increment progress every second
+        return prevProgress + 100 / 25; // Increment progress every second
       });
     }, 1000); // Update every second
   };

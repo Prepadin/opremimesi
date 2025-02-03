@@ -167,7 +167,7 @@ export default function ImagePage() {
       // Step 3: Generate the image with the translated prompt
       setLoading(true);
       const imageResponse = await axios.post(
-        `https://cd1f-46-122-68-255.ngrok-free.app/generate_design/?prompt=${translatedPrompt}`,
+        `https://4140-46-122-68-255.ngrok-free.app/generate_design/?prompt=${translatedPrompt}`,
         formData,
         {
           headers: {
@@ -386,7 +386,7 @@ return (
             />
             <a
               href={generatedImage}
-              download="generated_image.png"
+              download="generated_image.jpg"
               className="mt-4 inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-md shadow-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out"
             >
               Prenesi sliko

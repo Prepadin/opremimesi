@@ -7,7 +7,7 @@ export default function PrivacyPolicy() {
     <>
       <Head>
         <title>Pogoji storitve - Opremi Me</title>
-        <meta name="description" content="Privacy Policy for Room AI" />
+        <meta name="description" content="Privacy Policy for Opremi Me" />
         <meta name="robots" content="noindex" />
       </Head>
       <LandingNavbar />
@@ -17,7 +17,7 @@ export default function PrivacyPolicy() {
         <section className="mb-8">
          
           <p>
-          Dobrodošli v storitvi Opremi Me, ki jo nudi Prepad d.o.o. . Room AI je platforma programske opreme kot storitve (SaaS), ki uporabnikom omogoča ustvarjanje slik notranje opreme z uporabo umetne inteligence. Z dostopom do naših storitev in njihovo uporabo se (»uporabnik«, »vi« ali »vaš«) strinjate, da vas zavezujejo ti pogoji storitve (»pogoji«), ki urejajo vaš dostop do in uporabo Opremi Me.
+          Dobrodošli v storitvi Opremi Me, ki jo nudi Prepad d.o.o. . Opremi Me je platforma programske opreme kot storitve (SaaS), ki uporabnikom omogoča ustvarjanje slik notranje opreme z uporabo umetne inteligence. Z dostopom do naših storitev in njihovo uporabo se (»uporabnik«, »vi« ali »vaš«) strinjate, da vas zavezujejo ti pogoji storitve (»pogoji«), ki urejajo vaš dostop do in uporabo Opremi Me.
 
 
       

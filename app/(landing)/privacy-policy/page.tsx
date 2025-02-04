@@ -7,7 +7,7 @@ export default function PrivacyPolicy() {
     <>
       <Head>
         <title>Politika Zasebnosti - Opremi Me</title>
-        <meta name="description" content="Privacy Policy for Room AI" />
+        <meta name="description" content="Privacy Policy for Opremi Me" />
         <meta name="robots" content="noindex" />
       </Head>
       <LandingNavbar />

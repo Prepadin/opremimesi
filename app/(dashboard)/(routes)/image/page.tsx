@@ -435,13 +435,13 @@ return (
             <SelectTrigger className="w-full bg-[#0D0B14] border-0 text-white">
               <SelectValue placeholder="Izberi vrsto sloga" />
             </SelectTrigger>
+            <SelectContent>
             <SelectItem value="Bujno zelenje, naravni les, pohištvo iz ratana, živahni vzorci, mehke bele stene, umetnine s tropsko tematiko, topla razsvetljava, zračne zavese in poudarki iz bambusa.">
               Tropski umik
               </SelectItem>
               <SelectItem value="Mehke modre, peščeno bež barve, pobeljen les, naravne teksture, lahke tkanine, navtični dekor, pletene košare, zračne zavese, poudarki iz naplavljenega lesa in obilo naravne svetlobe.">
               Obalno zatišje
               </SelectItem>
-            <SelectContent>
               <SelectItem value="sodoben slog, elegantne linije, nevtralni toni, geometrijske oblike, minimalna dekoracija doma, enobarvna, bela, bež, siva, črna, les, steklo, kovinski poudarki">
                 Sodoben
               </SelectItem>

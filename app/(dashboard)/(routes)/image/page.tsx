@@ -38,32 +38,32 @@ export default function ImagePage() {
   // };
 
  
-  const handleClick = async () => {
-    updateLoadingStatus(true);
-    setProgress(0);
+  // const handleClick = async () => {
+  //   updateLoadingStatus(true);
+  //   setProgress(0);
   
-    // Step 1: Check if API limit is reached after starting progress
-    const response = await axios.post('/api/design');
+  //   // Step 1: Check if API limit is reached after starting progress
+  //   const response = await axios.post('/api/design');
     
-    if (response.status === 429) {
-      alert("API limit reached. Upgrade your subscription to continue.");
-      setProgress(0); // Reset progress since animation won't start
-      updateLoadingStatus(false);
-      return;
-    }
+  //   if (response.status === 429) {
+  //     alert("API limit reached. Upgrade your subscription to continue.");
+  //     setProgress(0); // Reset progress since animation won't start
+  //     updateLoadingStatus(false);
+  //     return;
+  //   }
   
-    // Step 2: Start progress animation if API limit is not reached
-    const interval = setInterval(() => {
-      setProgress((prevProgress) => {
-        if (prevProgress >= 100) {
-          clearInterval(interval);
-          updateLoadingStatus(false);
-          return 100;
-        }
-        return prevProgress + 100 / 20; // Increment progress every second
-      });
-    }, 1000);
-  };
+  //   // Step 2: Start progress animation if API limit is not reached
+  //   const interval = setInterval(() => {
+  //     setProgress((prevProgress) => {
+  //       if (prevProgress >= 100) {
+  //         clearInterval(interval);
+  //         updateLoadingStatus(false);
+  //         return 100;
+  //       }
+  //       return prevProgress + 100 / 20; // Increment progress every second
+  //     });
+  //   }, 1000);
+  // };
 
   const [file, setFile] = useState<File | null>(null)
   const [prompt, setPrompt] = useState<string>("");
@@ -215,13 +215,80 @@ export default function ImagePage() {
   //   }
   // };
 
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  
+  //   if (!prompt || !selectedImage) {
+  //     alert("Please provide both prompt and image");
+  //     setLoading(false);
+  //     return;
+  //   }
+  
+  //   try {
+  //     // Step 1: Translate the prompt
+  //     const translatedPrompt = await translatePrompt(prompt);
+  //     console.log("Translated Prompt:", translatedPrompt);
+  
+  //     // Step 2: Call API route to check API limit and subscription
+  //     const response = await axios.post('/api/design');
+  
+  //     if (response.status !== 200) {
+  //       if (response.status === 429) {
+  //         // API limit reached, redirect to settings page
+  //         window.location.href = "http://localhost:3000/settings";
+  //       } else {
+  //         alert(response.data.error || "Failed to verify checks");
+  //       }
+  //       setLoading(false);
+  //       return;
+  //     }
+  
+  //     const formData = new FormData();
+  //     formData.append("prompt", translatedPrompt);
+  //     formData.append("image", selectedImage);
+  
+  //     // Step 3: Generate the image with the translated prompt
+  //     setLoading(true);
+  //     const imageResponse = await axios.post(
+  //       `https://23f1-46-122-68-255.ngrok-free.app/generate_design/?prompt=${translatedPrompt}`,
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //           "Authorization": `Bearer ${AUTH_TOKEN}`,
+  //         },
+  //         responseType: "blob",
+  //       }
+  //     );
+  
+  //     // Create a temporary URL for the generated image
+  //     const imageUrl = URL.createObjectURL(imageResponse.data);
+  //     setGeneratedImage(imageUrl);
+  //   } catch (error: any) {
+  //     console.error("Error generating design:", error);
+      
+  //     if (error.response?.status === 429) {
+  //       // API limit reached, redirect to settings page
+  //       window.location.href = "http://localhost:3000/settings";
+  //     } else {
+  //       alert("Porabili ste vse credite. Za nadalno uporabo nadgradite svojo naročnino.");
+  //     }
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+    updateLoadingStatus(true); // Start loading animation
+    setProgress(0); // Reset progress
   
     if (!prompt || !selectedImage) {
       alert("Please provide both prompt and image");
       setLoading(false);
+      updateLoadingStatus(false); // Stop loading animation
       return;
     }
   
@@ -241,15 +308,27 @@ export default function ImagePage() {
           alert(response.data.error || "Failed to verify checks");
         }
         setLoading(false);
+        updateLoadingStatus(false); // Stop loading animation
         return;
       }
   
+      // Step 3: Start progress animation
+      const interval = setInterval(() => {
+        setProgress((prevProgress) => {
+          if (prevProgress >= 100) {
+            clearInterval(interval);
+            updateLoadingStatus(false); // Stop loading animation
+            return 100;
+          }
+          return prevProgress + 100 / 20; // Increment progress every second
+        });
+      }, 1000);
+  
+      // Step 4: Generate the image with the translated prompt
       const formData = new FormData();
       formData.append("prompt", translatedPrompt);
       formData.append("image", selectedImage);
   
-      // Step 3: Generate the image with the translated prompt
-      setLoading(true);
       const imageResponse = await axios.post(
         `https://23f1-46-122-68-255.ngrok-free.app/generate_design/?prompt=${translatedPrompt}`,
         formData,
@@ -267,7 +346,7 @@ export default function ImagePage() {
       setGeneratedImage(imageUrl);
     } catch (error: any) {
       console.error("Error generating design:", error);
-      
+  
       if (error.response?.status === 429) {
         // API limit reached, redirect to settings page
         window.location.href = "http://localhost:3000/settings";
@@ -276,9 +355,10 @@ export default function ImagePage() {
       }
     } finally {
       setLoading(false);
+      updateLoadingStatus(false); // Ensure loading animation stops
+      clearInterval(interval); // Clear the interval if it's still running
     }
   };
-  
   
   
 
@@ -455,15 +535,14 @@ return (
             </div>
           )}
          <button
-      type="submit"
-      disabled={loading}
-      onClick={handleClick}
-      className={`mt-4 px-6 py-3 bg-blue-600 text-white rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-        loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700'
-      }`}
-    >
-      {loadingnow ? `Generiram, prosim počakajte ... ${Math.round(progress)}%` : 'Generiraj'}
-    </button>
+  type="submit"
+  disabled={loading}
+  className={`mt-4 px-6 py-3 bg-blue-600 text-white rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+    loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700'
+  }`}
+>
+  {loadingnow ? `Generiram, prosim počakajte ... ${Math.round(progress)}%` : 'Generiraj'}
+</button>
         </CardContent>
       </form>
     </Card>

@@ -285,6 +285,8 @@ export default function ImagePage() {
     updateLoadingStatus(true); // Start loading animation
     setProgress(0); // Reset progress
   
+    let interval: NodeJS.Timeout | null = null; // Declare interval variable
+  
     if (!prompt || !selectedImage) {
       alert("Please provide both prompt and image");
       setLoading(false);
@@ -313,10 +315,10 @@ export default function ImagePage() {
       }
   
       // Step 3: Start progress animation
-      const interval = setInterval(() => {
+      interval = setInterval(() => {
         setProgress((prevProgress) => {
           if (prevProgress >= 100) {
-            clearInterval(interval);
+            clearInterval(interval!); // Clear interval when progress reaches 100%
             updateLoadingStatus(false); // Stop loading animation
             return 100;
           }
@@ -356,7 +358,7 @@ export default function ImagePage() {
     } finally {
       setLoading(false);
       updateLoadingStatus(false); // Ensure loading animation stops
-      clearInterval(interval); // Clear the interval if it's still running
+      if (interval) clearInterval(interval); // Clear the interval if it's still running
     }
   };
   
@@ -433,6 +435,12 @@ return (
             <SelectTrigger className="w-full bg-[#0D0B14] border-0 text-white">
               <SelectValue placeholder="Izberi vrsto sloga" />
             </SelectTrigger>
+            <SelectItem value="Bujno zelenje, naravni les, pohištvo iz ratana, živahni vzorci, mehke bele stene, umetnine s tropsko tematiko, topla razsvetljava, zračne zavese in poudarki iz bambusa.">
+              Tropski umik
+              </SelectItem>
+              <SelectItem value="Mehke modre, peščeno bež barve, pobeljen les, naravne teksture, lahke tkanine, navtični dekor, pletene košare, zračne zavese, poudarki iz naplavljenega lesa in obilo naravne svetlobe.">
+              Obalno zatišje
+              </SelectItem>
             <SelectContent>
               <SelectItem value="sodoben slog, elegantne linije, nevtralni toni, geometrijske oblike, minimalna dekoracija doma, enobarvna, bela, bež, siva, črna, les, steklo, kovinski poudarki">
                 Sodoben
@@ -460,12 +468,6 @@ return (
               </SelectItem>
               <SelectItem value="Odprt tloris, visoki stropi, velika okna, surovine, kot sta opeka in beton, moderno pohištvo, nevtralni toni, črni kovinski poudarki, minimalistični dekor in drzni umetniški deli.">
               Urbano podstrešje
-              </SelectItem>
-              <SelectItem value="Bujno zelenje, naravni les, pohištvo iz ratana, živahni vzorci, mehke bele stene, umetnine s tropsko tematiko, topla razsvetljava, zračne zavese in poudarki iz bambusa.">
-              Tropski umik
-              </SelectItem>
-              <SelectItem value="Mehke modre, peščeno bež barve, pobeljen les, naravne teksture, lahke tkanine, navtični dekor, pletene košare, zračne zavese, poudarki iz naplavljenega lesa in obilo naravne svetlobe.">
-              Obalno zatišje
               </SelectItem>
               </SelectContent>
           </Select>

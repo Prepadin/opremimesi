@@ -80,6 +80,14 @@ export default function ImagePage() {
     //   description: "Elegantno opremljena spalnica v slogu Art Deco z veliko zakonsko posteljo z geometrijsko posteljnino, razkošnim žametnim foteljem in zrcalno nočno omarico, ki odraža razkošje sobe. Umetniška dela, navdihnjena z Art Deco, dodajo pridih glamurja"
     // },
     {
+      image: "/living2.jpg?height=200&width=300",
+      description: "Živahna dnevna soba s tropsko temo, skupaj z udobnim pohištvom iz ratana, velikimi listnatimi rastlinami, ki prinašajo zunanjost, svetlimi blazinami, ki dodajajo barve, in bambusovimi žaluzijami za nadzor naravne svetlobe"
+    },
+    {
+      image: "/livingg.jpg?height=200&width=300",
+      description: "Elegantna dnevna soba, ki zajema sodobno estetiko sredi stoletja, v središču ima starinsko mizico iz tikovine, ki jo dopolnjuje klasična sončna ura na steni in udobna preproga pod nogami, ki ustvarja toplo in vabljivo vzdušje"
+    },
+    {
       image: "/bedroom_2.jpg?height=50&width=100",
       description: "Spalnica, ki izžareva francoski podeželski čar z mehko oblazinjeno posteljo, stenami, okrašene s cvetličnimi tapetami, in vintage leseno garderobo. Kristalni lestenec meče topel in vabljiv sijaj nad prostorom"
     },
@@ -322,7 +330,7 @@ export default function ImagePage() {
             updateLoadingStatus(false); // Stop loading animation
             return 100;
           }
-          return prevProgress + 100 / 20; // Increment progress every second
+          return prevProgress + 100 / 35; // Increment progress every second
         });
       }, 1000);
   

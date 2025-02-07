@@ -104,13 +104,9 @@ export default function ImagePage() {
       description: "Glamurozna glavna spalnica v slogu Hollywood Regency, ki se ponaša s plišastim vzglavjem, zrcalnim pohištvom, ki odraža eleganco, razkošnimi tkaninami v bogatih teksturah in razkošnimi zlatimi poudarki za pridih razkošja"
     },
     {
-      image: "/living2.jpg?height=200&width=300",
-      description: "Živahna dnevna soba s tropsko temo, skupaj z udobnim pohištvom iz ratana, velikimi listnatimi rastlinami, ki prinašajo zunanjost, svetlimi blazinami, ki dodajajo barve, in bambusovimi žaluzijami za nadzor naravne svetlobe"
-    },
-    {
-      image: "/livingg.jpg?height=200&width=300",
-      description: "Elegantna dnevna soba, ki zajema sodobno estetiko sredi stoletja, v središču ima starinsko mizico iz tikovine, ki jo dopolnjuje klasična sončna ura na steni in udobna preproga pod nogami, ki ustvarja toplo in vabljivo vzdušje"
-    }
+      image: "/bed.jpg?height=50&width=50",
+      description: "Elegantno opremljena spalnica v slogu Art Deco z veliko zakonsko posteljo z geometrijsko posteljnino, razkošnim žametnim foteljem in zrcalno nočno omarico, ki odraža razkošje sobe. Umetniška dela, navdihnjena z Art Deco, dodajo pridih glamurja"
+    }    
   ]
 
 

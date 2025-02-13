@@ -1,6 +1,6 @@
 'use client'
 
-import { cloudinary } from "../api/cloudinary";
+//import { cloudinary } from "../api/cloudinary";
 import { useState } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button"

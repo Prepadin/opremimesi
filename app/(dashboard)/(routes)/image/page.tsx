@@ -717,7 +717,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       // API limit reached, redirect to settings page
       window.location.href = "http://localhost:3000/settings";
     } else {
-      alert("Porabili ste vse credite. Za nadalno uporabo nadgradite svojo naročnino.");
+      alert("Porabili ste vse kredite. Za nadalno uporabo nadgradite svojo naročnino.");
     }
   } finally {
     setLoading(false);

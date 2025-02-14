@@ -1,5 +1,5 @@
 'use client'
-
+import imageCompression from "browser-image-compression";
 //import { cloudinary } from "../api/cloudinary";
 import { useState } from "react";
 import axios from "axios";
@@ -468,126 +468,263 @@ export default function ImagePage() {
   //   }
   // };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    updateLoadingStatus(true); // Start loading animation
-    setProgress(0); // Reset progress
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   updateLoadingStatus(true); // Start loading animation
+  //   setProgress(0); // Reset progress
   
-    let interval: NodeJS.Timeout | null = null; // Declare interval variable
+  //   let interval: NodeJS.Timeout | null = null; // Declare interval variable
   
-    if (!prompt || !selectedImage) {
-      alert("Please provide both prompt and image");
+  //   if (!prompt || !selectedImage) {
+  //     alert("Please provide both prompt and image");
+  //     setLoading(false);
+  //     updateLoadingStatus(false); // Stop loading animation
+  //     return;
+  //   }
+  
+  //   try {
+  //     // Step 1: Translate the prompt
+  //     const translatedPrompt = await translatePrompt(prompt);
+  //     console.log("Translated Prompt:", translatedPrompt);
+  
+  //     // Step 2: Call API route to check API limit and subscription
+  //     const response = await axios.post('/api/design');
+  
+  //     if (response.status !== 200) {
+  //       if (response.status === 429) {
+  //         // API limit reached, redirect to settings page
+  //         window.location.href = "http://localhost:3000/settings";
+  //       } else {
+  //         alert(response.data.error || "Failed to verify checks");
+  //       }
+  //       setLoading(false);
+  //       updateLoadingStatus(false); // Stop loading animation
+  //       return;
+  //     }
+  
+  //     // Step 3: Start progress animation
+  //     interval = setInterval(() => {
+  //       setProgress((prevProgress) => {
+  //         if (prevProgress >= 100) {
+  //           clearInterval(interval!); // Clear interval when progress reaches 100%
+  //           updateLoadingStatus(false); // Stop loading animation
+  //           return 100;
+  //         }
+  //         return prevProgress + 100 / 55; // Increment progress every second
+  //       });
+  //     }, 1000);
+  
+  //     // Step 4: Upload the selected image to Cloudinary
+  //     const selectedImageFormData = new FormData();
+  //     selectedImageFormData.append("file", selectedImage);
+  //     selectedImageFormData.append("upload_preset", "opremimennow"); // Replace with your upload preset
+  
+  //     const selectedImageResponse = await fetch(
+  //       `https://api.cloudinary.com/v1_1/daui0fq95/image/upload`,
+  //       {
+  //         method: "POST",
+  //         body: selectedImageFormData,
+  //       }
+  //     );
+  
+  //     const selectedImageData = await selectedImageResponse.json();
+  //     const selectedImageUrl = selectedImageData.secure_url; // URL of the uploaded selected image
+  //     console.log("Selected Image uploaded to Cloudinary:", selectedImageUrl);
+  
+  //     // Step 5: Generate the AI image
+  //     const formDataForDesign = new FormData();
+  //     formDataForDesign.append("prompt", translatedPrompt);
+  //     formDataForDesign.append("image", selectedImage);
+  
+  //     const imageResponse = await axios.post(
+  //       `https://7d83-46-122-103-122.ngrok-free.app/generate_design/?prompt=${translatedPrompt}`,
+  //       formDataForDesign,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //           "Authorization": `Bearer ${AUTH_TOKEN}`,
+  //         },
+  //         responseType: "blob",
+  //       }
+  //     );
+  
+  //     // Step 6: Upload the AI-generated image to Cloudinary
+  //     const aiGeneratedImageBlob = imageResponse.data;
+  //     const aiGeneratedImageFile = new File([aiGeneratedImageBlob], "ai_generated_image.png", {
+  //       type: "image/png",
+  //     });
+  
+  //     const aiGeneratedImageFormData = new FormData();
+  //     aiGeneratedImageFormData.append("file", aiGeneratedImageFile);
+  //     aiGeneratedImageFormData.append("upload_preset", "opremimennow"); // Replace with your upload preset
+  
+  //     const aiGeneratedImageResponse = await fetch(
+  //       `https://api.cloudinary.com/v1_1/daui0fq95/image/upload`,
+  //       {
+  //         method: "POST",
+  //         body: aiGeneratedImageFormData,
+  //       }
+  //     );
+  
+  //     const aiGeneratedImageData = await aiGeneratedImageResponse.json();
+  //     const aiGeneratedImageUrl = aiGeneratedImageData.secure_url; // URL of the uploaded AI-generated image
+  //     console.log("AI-generated Image uploaded to Cloudinary:", aiGeneratedImageUrl);
+  
+  //     // Step 7: Set the AI-generated image URL in state
+  //     setGeneratedImage(aiGeneratedImageUrl);
+  //   } catch (error: any) {
+  //     console.error("Error generating design:", error);
+  
+  //     if (error.response?.status === 429) {
+  //       // API limit reached, redirect to settings page
+  //       window.location.href = "http://localhost:3000/settings";
+  //     } else {
+  //       alert("Porabili ste vse credite. Za nadalno uporabo nadgradite svojo naročnino.");
+  //     }
+  //   } finally {
+  //     setLoading(false);
+  //     updateLoadingStatus(false); // Ensure loading animation stops
+  //     if (interval) clearInterval(interval); // Clear the interval if it's still running
+  //   }
+  // };
+
+
+
+// Image compression function
+const compressImage = async (file) => {
+  const options = {
+    maxSizeMB: 1, // Maximum size in MB
+    maxWidthOrHeight: 1024, // Maximum width or height
+    useWebWorker: true, // Use web workers for faster compression
+  };
+  return await imageCompression(file, options);
+};
+
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  setLoading(true);
+  updateLoadingStatus(true); // Start loading animation
+  setProgress(0); // Reset progress
+
+  let interval: NodeJS.Timeout | null = null; // Declare interval variable
+
+  if (!prompt || !selectedImage) {
+    alert("Please provide both prompt and image");
+    setLoading(false);
+    updateLoadingStatus(false); // Stop loading animation
+    return;
+  }
+
+  try {
+    // Step 1: Compress the selected image
+    const compressedFile = await compressImage(selectedImage);
+    console.log("Compressed Image:", compressedFile);
+
+    // Step 2: Translate the prompt
+    const translatedPrompt = await translatePrompt(prompt);
+    console.log("Translated Prompt:", translatedPrompt);
+
+    // Step 3: Call API route to check API limit and subscription
+    const response = await axios.post('/api/design');
+
+    if (response.status !== 200) {
+      if (response.status === 429) {
+        // API limit reached, redirect to settings page
+        window.location.href = "http://localhost:3000/settings";
+      } else {
+        alert(response.data.error || "Failed to verify checks");
+      }
       setLoading(false);
       updateLoadingStatus(false); // Stop loading animation
       return;
     }
-  
-    try {
-      // Step 1: Translate the prompt
-      const translatedPrompt = await translatePrompt(prompt);
-      console.log("Translated Prompt:", translatedPrompt);
-  
-      // Step 2: Call API route to check API limit and subscription
-      const response = await axios.post('/api/design');
-  
-      if (response.status !== 200) {
-        if (response.status === 429) {
-          // API limit reached, redirect to settings page
-          window.location.href = "http://localhost:3000/settings";
-        } else {
-          alert(response.data.error || "Failed to verify checks");
+
+    // Step 4: Start progress animation
+    interval = setInterval(() => {
+      setProgress((prevProgress) => {
+        if (prevProgress >= 100) {
+          clearInterval(interval!); // Clear interval when progress reaches 100%
+          updateLoadingStatus(false); // Stop loading animation
+          return 100;
         }
-        setLoading(false);
-        updateLoadingStatus(false); // Stop loading animation
-        return;
-      }
-  
-      // Step 3: Start progress animation
-      interval = setInterval(() => {
-        setProgress((prevProgress) => {
-          if (prevProgress >= 100) {
-            clearInterval(interval!); // Clear interval when progress reaches 100%
-            updateLoadingStatus(false); // Stop loading animation
-            return 100;
-          }
-          return prevProgress + 100 / 35; // Increment progress every second
-        });
-      }, 1000);
-  
-      // Step 4: Upload the selected image to Cloudinary
-      const selectedImageFormData = new FormData();
-      selectedImageFormData.append("file", selectedImage);
-      selectedImageFormData.append("upload_preset", "opremimennow"); // Replace with your upload preset
-  
-      const selectedImageResponse = await fetch(
-        `https://api.cloudinary.com/v1_1/daui0fq95/image/upload`,
-        {
-          method: "POST",
-          body: selectedImageFormData,
-        }
-      );
-  
-      const selectedImageData = await selectedImageResponse.json();
-      const selectedImageUrl = selectedImageData.secure_url; // URL of the uploaded selected image
-      console.log("Selected Image uploaded to Cloudinary:", selectedImageUrl);
-  
-      // Step 5: Generate the AI image
-      const formDataForDesign = new FormData();
-      formDataForDesign.append("prompt", translatedPrompt);
-      formDataForDesign.append("image", selectedImage);
-  
-      const imageResponse = await axios.post(
-        `https://7d83-46-122-103-122.ngrok-free.app/generate_design/?prompt=${translatedPrompt}`,
-        formDataForDesign,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            "Authorization": `Bearer ${AUTH_TOKEN}`,
-          },
-          responseType: "blob",
-        }
-      );
-  
-      // Step 6: Upload the AI-generated image to Cloudinary
-      const aiGeneratedImageBlob = imageResponse.data;
-      const aiGeneratedImageFile = new File([aiGeneratedImageBlob], "ai_generated_image.png", {
-        type: "image/png",
+        return prevProgress + 100 / 55; // Increment progress every second
       });
-  
-      const aiGeneratedImageFormData = new FormData();
-      aiGeneratedImageFormData.append("file", aiGeneratedImageFile);
-      aiGeneratedImageFormData.append("upload_preset", "opremimennow"); // Replace with your upload preset
-  
-      const aiGeneratedImageResponse = await fetch(
-        `https://api.cloudinary.com/v1_1/daui0fq95/image/upload`,
-        {
-          method: "POST",
-          body: aiGeneratedImageFormData,
-        }
-      );
-  
-      const aiGeneratedImageData = await aiGeneratedImageResponse.json();
-      const aiGeneratedImageUrl = aiGeneratedImageData.secure_url; // URL of the uploaded AI-generated image
-      console.log("AI-generated Image uploaded to Cloudinary:", aiGeneratedImageUrl);
-  
-      // Step 7: Set the AI-generated image URL in state
-      setGeneratedImage(aiGeneratedImageUrl);
-    } catch (error: any) {
-      console.error("Error generating design:", error);
-  
-      if (error.response?.status === 429) {
-        // API limit reached, redirect to settings page
-        window.location.href = "http://localhost:3000/settings";
-      } else {
-        alert("Porabili ste vse credite. Za nadalno uporabo nadgradite svojo naročnino.");
+    }, 1000);
+
+    // Step 5: Upload the compressed selected image to Cloudinary
+    const selectedImageFormData = new FormData();
+    selectedImageFormData.append("file", compressedFile);
+    selectedImageFormData.append("upload_preset", "opremimennow"); // Replace with your upload preset
+
+    const selectedImageResponse = await fetch(
+      `https://api.cloudinary.com/v1_1/daui0fq95/image/upload`,
+      {
+        method: "POST",
+        body: selectedImageFormData,
       }
-    } finally {
-      setLoading(false);
-      updateLoadingStatus(false); // Ensure loading animation stops
-      if (interval) clearInterval(interval); // Clear the interval if it's still running
+    );
+
+    const selectedImageData = await selectedImageResponse.json();
+    const selectedImageUrl = selectedImageData.secure_url; // URL of the uploaded selected image
+    console.log("Selected Image uploaded to Cloudinary:", selectedImageUrl);
+
+    // Step 6: Generate the AI image
+    const formDataForDesign = new FormData();
+    formDataForDesign.append("prompt", translatedPrompt);
+    formDataForDesign.append("image", compressedFile); // Use the compressed file for AI generation
+
+    const imageResponse = await axios.post(
+      `https://7d83-46-122-103-122.ngrok-free.app/generate_design/?prompt=${translatedPrompt}`,
+      formDataForDesign,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Authorization": `Bearer ${AUTH_TOKEN}`,
+        },
+        responseType: "blob",
+      }
+    );
+
+    // Step 7: Upload the AI-generated image to Cloudinary
+    const aiGeneratedImageBlob = imageResponse.data;
+    const aiGeneratedImageFile = new File([aiGeneratedImageBlob], "ai_generated_image.png", {
+      type: "image/png",
+    });
+
+    const aiGeneratedImageFormData = new FormData();
+    aiGeneratedImageFormData.append("file", aiGeneratedImageFile);
+    aiGeneratedImageFormData.append("upload_preset", "opremimennow"); // Replace with your upload preset
+
+    const aiGeneratedImageResponse = await fetch(
+      `https://api.cloudinary.com/v1_1/daui0fq95/image/upload`,
+      {
+        method: "POST",
+        body: aiGeneratedImageFormData,
+      }
+    );
+
+    const aiGeneratedImageData = await aiGeneratedImageResponse.json();
+    const aiGeneratedImageUrl = aiGeneratedImageData.secure_url; // URL of the uploaded AI-generated image
+    console.log("AI-generated Image uploaded to Cloudinary:", aiGeneratedImageUrl);
+
+    // Step 8: Set the AI-generated image URL in state
+    setGeneratedImage(aiGeneratedImageUrl);
+  } catch (error: any) {
+    console.error("Error generating design:", error);
+
+    if (error.response?.status === 429) {
+      // API limit reached, redirect to settings page
+      window.location.href = "http://localhost:3000/settings";
+    } else {
+      alert("Porabili ste vse credite. Za nadalno uporabo nadgradite svojo naročnino.");
     }
-  };
+  } finally {
+    setLoading(false);
+    updateLoadingStatus(false); // Ensure loading animation stops
+    if (interval) clearInterval(interval); // Clear the interval if it's still running
+  }
+};
   
 
   // Add this new function to handle example image selection

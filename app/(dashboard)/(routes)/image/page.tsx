@@ -591,8 +591,10 @@ export default function ImagePage() {
 
 
 
-// Image compression function
-const compressImage = async (file) => {
+
+
+// Image compression function with TypeScript type for `file`
+const compressImage = async (file: File) => {
   const options = {
     maxSizeMB: 1, // Maximum size in MB
     maxWidthOrHeight: 1024, // Maximum width or height

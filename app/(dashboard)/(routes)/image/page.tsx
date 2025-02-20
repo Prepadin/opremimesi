@@ -260,7 +260,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     formDataForDesign.append("image", compressedFile); // Use the compressed file for AI generation
 
     const imageResponse = await axios.post(
-      `https://4939-46-122-103-122.ngrok-free.app/generate_design/?prompt=${translatedPrompt}`,
+      `https://0944-46-122-70-198.ngrok-free.app/generate_design/?prompt=${translatedPrompt}`,
       formDataForDesign,
       {
         headers: {
